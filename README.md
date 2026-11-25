@@ -139,4 +139,4 @@ int252-project/
 ## 🔗 Project Links
 
 - 🌐 **Live Demo:** _Add your deployed link here_
-- 💻 **GitHub Repository:** _Add your repository link here_
+- 💻 **GitHub Repository:** https://github.com/Nishantmangal01/INT252-ReactJS-Project-ECOCYCLE-
