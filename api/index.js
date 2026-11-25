@@ -1,0 +1,4 @@
+// api/index.js - Vercel serverless entry. It just hands every /api request to the Express app.
+import app from '../server.js'
+
+export default app

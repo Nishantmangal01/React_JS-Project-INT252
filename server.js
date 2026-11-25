@@ -34,19 +34,37 @@ async function writeAudit(action, performedBy, targetType, targetId) {
 }
 
 // ================= 3. DATABASE CONNECTION =================
+// Connects once and reuses the same connection. This matters on Vercel, where the
+// function can be called many times and should not open a new connection every time.
+let connectionPromise = null
+
 async function connectDatabase() {
+  if (mongoose.connection.readyState === 1) return
   if (!process.env.MONGODB_URI) {
-    console.error('MONGODB_URI is missing. Create a .env file (see .env.example).')
-    process.exit(1)
+    throw new Error('MONGODB_URI is missing. Create a .env file (see .env.example).')
   }
+  if (!connectionPromise) {
+    connectionPromise = mongoose
+      .connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 8000 })
+      .then(() => console.log('MongoDB connected'))
+      .catch((error) => {
+        connectionPromise = null // allow a retry on the next request
+        throw error
+      })
+  }
+  await connectionPromise
+}
+
+// Make sure the database is connected before any /api route runs
+app.use('/api', async (req, res, next) => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI)
-    console.log('MongoDB connected')
+    await connectDatabase()
+    next()
   } catch (error) {
     console.error('MongoDB connection failed:', error.message)
-    process.exit(1)
+    return sendResponse(res, 500, 'Database connection failed')
   }
-}
+})
 
 // ================= 4. HELPER MIDDLEWARE =================
 // Reads x-user-id, finds that user in MongoDB and attaches it to req.user.
@@ -455,7 +473,18 @@ app.use((error, req, res, next) => {
 })
 
 // ================= 11. START SERVER =================
-await connectDatabase()
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-})
+// On Vercel this app runs as a serverless function (see api/index.js), so it must not listen.
+// Locally (npm run server) we connect first and then listen.
+if (!process.env.VERCEL) {
+  try {
+    await connectDatabase()
+  } catch (error) {
+    console.error('MongoDB connection failed:', error.message)
+    process.exit(1)
+  }
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`)
+  })
+}
+
+export default app
