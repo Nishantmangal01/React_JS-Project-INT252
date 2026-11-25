@@ -1,68 +1,265 @@
-# EcoCycle: E-Waste Collection and EPR Record Platform
+# ♻️ EcoCycle — E-Waste Collection & EPR Record Platform
 
-A class project (INT252). Citizens request pickup of e-waste, approved collection partners (centers and recyclers) update the pickup status and enter the verified weight, and an admin approves partners and maintains auditable EPR records for participating organizations.
+> **Building a cleaner tomorrow, one device at a time** — A full-stack platform that connects citizens, authorized collection partners, recyclers, and participating organizations to collect e-waste responsibly and keep auditable recycling and EPR records.
 
-**Stack:** React (Vite, `.jsx`), React Router, Axios, plain CSS, Express, MongoDB Atlas (Mongoose), bcryptjs.
+---
 
-## Why there is a backend
-React runs in the browser. If the browser connected straight to MongoDB Atlas, the database username and password would be visible to everyone. So the browser talks only to a small Express server (`server.js`), and only that server talks to Atlas.
+## 🧠 About the Project
 
-## Setup
+**EcoCycle** is a full-stack web application built to make e-waste collection simple, trackable, and accountable.
 
-1. Install packages: `npm install`
-2. Create a free MongoDB Atlas account and an **M0** cluster.
-3. **Database Access**: create a database user (avoid special characters in the password, or URL-encode them).
-4. **Network Access**: add your IP. `0.0.0.0/0` (allow all) is fine for a class project, but it lets any IP try to connect, so protect it with a strong database password.
-5. **Connect > Drivers**: copy the connection string and add the database name at the end, for example `mongodb+srv://USER:PASSWORD@cluster0.xxxxx.mongodb.net/ecocycle`.
-6. Copy `.env.example` to `.env` and fill in `MONGODB_URI` (and `PORT=5000`). `.env` is listed in `.gitignore`; never commit it.
-7. Create the admin account once: `npm run seed`
-   Default login: `admin@ecocycle.com` / `Admin@123`. To change it, set `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env` before seeding.
+The platform enables:
 
-## Run (two terminals)
+- Citizens to request pickup of old electronics
+- Collection centers and recyclers to update pickup status and enter verified weight
+- Admins to approve partners and maintain recycling records
+- Participating organizations to have their EPR (Extended Producer Responsibility) records maintained
+- Every important change to be saved in an audit log
 
-```bash
-npm run server   # Terminal 1: Express + Atlas on port 5000 (prints "MongoDB connected")
-npm run dev      # Terminal 2: Vite on port 5173 (proxies /api to port 5000)
+The system provides separate views for **Citizens**, **Partners**, and **Admins**, so each person sees only what they need.
+
+---
+
+## ✨ Features
+
+- 🔐 **Secure Registration & Login** — Passwords are hashed with bcrypt, never stored in plain text
+- 👥 **Role-Based Access** — Citizen, Partner, and Admin dashboards, checked on the server
+- 📝 **Pickup Requests** — Citizens request collection with device type, quantity, and address
+- 🚚 **Status Tracking** — Requested → Scheduled → Picked Up → Delivered to Recycler → Verified
+- ⚖️ **Verified Weight Entry** — Partners record the verified weight in kg
+- ✅ **Partner Approval** — Admin approves or rejects collection centers and recyclers
+- 🏢 **Organizations** — Admin maintains the list of participating organizations
+- 📄 **EPR Records** — Admin links verified requests to organizations (Verified requests only)
+- 🧾 **Audit Log** — Every status change, approval, and EPR record shows who did it and when
+- 📈 **Admin Overview** — Simple counts for requests, partners, weight, and EPR records
+- ⏳ **Loading, Empty & Error States** — Clear messages on every data page
+- 📱 **Responsive Design** — Works on desktop and mobile with a dark and teal theme
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React JS (Vite), JSX, React Router, Axios, CSS3 |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB Atlas, Mongoose |
+| **Authentication** | bcryptjs password hashing, server-side role checks |
+| **Other** | cors, dotenv |
+
+---
+
+## 👤 User Roles
+
+| Role | What They Can Do |
+|------|------------------|
+| 🙋 **Citizen** | Register, log in, request pickups, track own requests |
+| 🚚 **Partner** | Register as a center or recycler, get approved, update status, enter verified weight |
+| 🛡️ **Admin** | Approve partners, view all requests, manage organizations, create EPR records, view audit log |
+
+> Participating organizations do not log in. The admin creates and maintains their records.
+
+---
+
+## 🔄 How It Works
+
+1. A citizen registers and logs in.
+2. The citizen submits an e-waste pickup request.
+3. A collection partner registers and waits for admin approval.
+4. The admin approves the partner.
+5. The approved partner schedules the pickup and marks it as picked up.
+6. The device is delivered to a recycler.
+7. The recycler enters the verified weight, and the request becomes **Verified**.
+8. The admin creates an EPR record linking the verified request to an organization.
+9. The audit log records every step with who did it and when.
+
+---
+
+## 🏠 Main Modules
+
+| Module | Description |
+|--------|-------------|
+| 👤 **Authentication** | Registration and login with hashed passwords |
+| 📦 **Requests** | Create, view, and update collection requests |
+| 🚚 **Partner Dashboard** | Update status and enter verified weight |
+| ✅ **Partner Approval** | Admin approves or rejects partners |
+| 🏢 **Organizations** | Participating organization records |
+| 📄 **EPR Records** | Recycling records linked to organizations |
+| 🧾 **Audit Log** | Who changed what, and when |
+| 📈 **Admin Overview** | Counts and totals from the database |
+
+---
+
+## 📄 Pages
+
+| Route | Who | Description |
+|-------|-----|-------------|
+| `/` | Everyone | Home page |
+| `/register` | Everyone | Create an account |
+| `/login` | Everyone | Log in |
+| `/requests` | Citizen | My requests |
+| `/requests/new` | Citizen | New pickup request |
+| `/requests/:id` | All logged-in roles | Request details (dynamic route) |
+| `/partner` | Partner | Partner dashboard |
+| `/admin` | Admin | Overview (nested routes below) |
+| `/admin/partners` | Admin | Approve or reject partners |
+| `/admin/requests` | Admin | All requests |
+| `/admin/organizations` | Admin | Organizations |
+| `/admin/epr` | Admin | EPR records |
+| `/admin/audit` | Admin | Audit log |
+
+---
+
+## 🗄️ Database Models
+
+| Model | Purpose |
+|-------|---------|
+| **User** | Citizens, partners, and the admin |
+| **Request** | Pickup requests with status and verified weight |
+| **Organization** | Participating organizations |
+| **EprRecord** | Links a verified request to an organization |
+| **AuditLog** | Record of every important change |
+
+---
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Access |
+|--------|----------|--------|
+| POST | `/api/auth/register` | Public |
+| POST | `/api/auth/login` | Public |
+| GET / POST | `/api/requests` | Citizen, Partner, Admin |
+| GET / PATCH | `/api/requests/:id` | Role-based |
+| GET | `/api/partners` | Admin |
+| PATCH | `/api/partners/:id` | Admin |
+| GET / POST | `/api/organizations` | Admin |
+| GET / POST | `/api/epr` | Admin |
+| GET | `/api/audit` | Admin |
+| GET | `/api/stats` | Admin |
+
+---
+
+## 📁 Project Structure
+
+```
+int252-project/
+├── public/
+├── src/
+│   ├── Components/        Navbar, Footer, StatusBadge, StatCard, ProtectedRoute
+│   ├── Pages/             Home, Login, Register, MyRequests, NewRequest,
+│   │   │                  RequestDetails, PartnerDashboard
+│   │   └── Admin/         AdminLayout, AdminHome, AdminPartners, AdminRequests,
+│   │                      AdminOrganizations, AdminEpr, AdminAudit
+│   ├── EcoCycle.jsx       App routes
+│   ├── EcoCycle.css       Project styles
+│   ├── Axios.jsx          Axios setup
+│   └── main.jsx           Entry point
+├── server.js              Express server and API routes
+├── models.js              Mongoose models
+├── seedAdmin.js           Creates the admin account
+├── .env.example           Environment variable template
+├── vite.config.js
+└── package.json
 ```
 
-Open http://localhost:5173
+---
 
-## Demo flow
-1. Register a **citizen**, log in, create a pickup request.
-2. Register a **partner** (type recycler). Log in as admin, open **Partners**, approve it.
-3. Log in as the partner, press **Picked Up**, then enter a weight and press **Verify**.
-4. As admin, add an **Organization**, then create an **EPR record** (only Verified requests are listed).
-5. Open **Audit Log** to see every step. Check the collections in Atlas under **Browse Collections**.
+## ⚙️ Getting Started
 
-## Files
-- `models.js`: the 5 Mongoose models (User, Request, Organization, EprRecord, AuditLog)
-- `server.js`: Express app, `x-user-id` and role middleware, and all API routes
-- `seedAdmin.js`: creates the admin account once
-- `src/EcoCycle.jsx`: all routes (normal, dynamic `/requests/:id`, nested `/admin/...`)
-- `src/Axios.jsx`: Axios instance that adds the `x-user-id` header
-- `src/Components`: Navbar, Footer, StatusBadge, StatCard, ProtectedRoute
-- `src/Pages`: all pages; `src/Pages/Admin` holds the admin pages
+### Prerequisites
 
-## API
-All responses look like `{ success, message, data }`.
+- Node.js 18 or higher
+- A free [MongoDB Atlas](https://www.mongodb.com/atlas) account
 
-| Method and path | Who |
-|---|---|
-| `POST /api/auth/register`, `POST /api/auth/login` | public |
-| `GET /api/requests`, `GET /api/requests/:id` | logged in (filtered by role) |
-| `POST /api/requests` | citizen |
-| `PATCH /api/requests/:id` | approved partner or admin |
-| `GET /api/partners`, `PATCH /api/partners/:id` | admin |
-| `GET/POST /api/organizations` | admin |
-| `GET/POST /api/epr` (Verified requests only) | admin |
-| `GET /api/audit`, `GET /api/stats` | admin |
+### 1. Clone and install
 
-## Limitations (important)
-- **No cookies or JWT** (as required by the faculty). The browser stores `id`, `username` and `role` in `localStorage` and sends the user id in the `x-user-id` header. The server always re-checks the real role in MongoDB, but anyone who learns another user's id could pretend to be that user. This is acceptable for an academic project, not for production, which would use signed sessions or JWT.
-- Login has no rate limiting or lockout.
-- Partner requests: the first approved partner who updates an open request becomes its assigned partner. Admin can reassign through the API.
-- A Verified request is final and cannot be edited, because its weight is copied into EPR records.
-- Not tested with a real Atlas cluster by the author of this code; follow the demo flow above to check each feature.
+```bash
+git clone <your-repository-url>
+cd int252-project
+npm install
+```
 
-## Future scope
-Signed sessions or JWT, password reset, partner assignment screen, search and filters, email notifications.
+### 2. Set up MongoDB Atlas
+
+1. Create a free **M0 cluster**.
+2. In **Database Access**, create a database user.
+3. In **Network Access**, allow your IP address.
+4. In **Connect → Drivers**, copy your connection string and add the database name `ecocycle`.
+
+### 3. Configure environment variables
+
+Create a `.env` file in the project root (use `.env.example` as a template):
+
+```
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecocycle
+PORT=5000
+```
+
+> ⚠️ Never commit your `.env` file.
+
+### 4. Create the admin account
+
+```bash
+node seedAdmin.js
+```
+
+Admin accounts cannot be created through public registration.
+
+### 5. Run the project (two terminals)
+
+```bash
+# Terminal 1 — backend
+npm run server
+
+# Terminal 2 — frontend
+npm run dev
+```
+
+Open **http://localhost:5173** in your browser.
+
+---
+
+## 🔒 Security Notes
+
+- Passwords are hashed with bcrypt and never returned by the API
+- Public registration cannot create an admin
+- Every protected route checks the user's real role from the database
+- The MongoDB connection string stays on the server only
+
+### ⚠️ Known Limitation
+
+This project does not use cookies or tokens for login sessions. After login, the browser stores the user id and sends it with each request, and the server verifies the role from the database. Because there is no signed token, someone who knows another user's id could pretend to be that user. This is acceptable for an academic project, but a production system should use signed sessions or JWT.
+
+---
+
+## ⚠️ Disclaimer
+
+EPR records in this project are academic records stored in a database. They are not legally certified or government-approved.
+
+---
+
+## 📊 Future Improvements
+
+- 🔑 JWT or signed-session authentication
+- 📧 Email and SMS notifications
+- 🔍 Search and filters
+- 📄 CSV/PDF report export
+- 🗺️ Pickup location map
+- 📱 Progressive Web App support
+
+---
+
+## 👨‍💻 Developed By
+
+**Nishant Mangal**
+
+- 📧 mangalnishant1206@gmail.com
+- 💻 Full Stack Developer
+- 🎓 B.Tech Computer Science Engineering
+
+---
+
+## 🔗 Project Links
+
+- 🌐 **Live Demo:** _Add your deployed link here_
+- 💻 **GitHub Repository:** _Add your repository link here_
