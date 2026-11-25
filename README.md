@@ -1,9 +1,9 @@
 # ♻️ EcoCycle — E-Waste Collection & EPR Record Platform
 
-> **Building a cleaner tomorrow, one device at a time** — A full-stack platform that connects citizens, authorized collection partners, recyclers, and participating organizations to collect e-waste responsibly and keep auditable recycling and EPR records.
-
+> **Building a cleaner tomorrow** — A full-stack platform that connects citizens, authorized collection partners, recyclers, and participating organizations to collect e-waste responsibly and keep auditable recycling and EPR records.
 ---
-
+> **🌐 **Live Demo:** [https://full-stack-project-sem-4.onrender.com](https://full-stack-project-sem-4.onrender.com)**
+---
 ## 🧠 About the Project
 
 **EcoCycle** is a full-stack web application built to make e-waste collection simple, trackable, and accountable.
@@ -41,11 +41,10 @@ The system provides separate views for **Citizens**, **Partners**, and **Admins*
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React JS (Vite), JSX, React Router, Axios, CSS3 |
+| **Frontend** | React JS , JSX, React Router, Axios, CSS |
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB Atlas, Mongoose |
-| **Authentication** | bcryptjs password hashing, server-side role checks |
-| **Other** | cors, dotenv |
+
 
 ---
 
@@ -88,54 +87,6 @@ The system provides separate views for **Citizens**, **Partners**, and **Admins*
 | 🧾 **Audit Log** | Who changed what, and when |
 | 📈 **Admin Overview** | Counts and totals from the database |
 
----
-
-## 📄 Pages
-
-| Route | Who | Description |
-|-------|-----|-------------|
-| `/` | Everyone | Home page |
-| `/register` | Everyone | Create an account |
-| `/login` | Everyone | Log in |
-| `/requests` | Citizen | My requests |
-| `/requests/new` | Citizen | New pickup request |
-| `/requests/:id` | All logged-in roles | Request details (dynamic route) |
-| `/partner` | Partner | Partner dashboard |
-| `/admin` | Admin | Overview (nested routes below) |
-| `/admin/partners` | Admin | Approve or reject partners |
-| `/admin/requests` | Admin | All requests |
-| `/admin/organizations` | Admin | Organizations |
-| `/admin/epr` | Admin | EPR records |
-| `/admin/audit` | Admin | Audit log |
-
----
-
-## 🗄️ Database Models
-
-| Model | Purpose |
-|-------|---------|
-| **User** | Citizens, partners, and the admin |
-| **Request** | Pickup requests with status and verified weight |
-| **Organization** | Participating organizations |
-| **EprRecord** | Links a verified request to an organization |
-| **AuditLog** | Record of every important change |
-
----
-
-## 🔌 API Endpoints
-
-| Method | Endpoint | Access |
-|--------|----------|--------|
-| POST | `/api/auth/register` | Public |
-| POST | `/api/auth/login` | Public |
-| GET / POST | `/api/requests` | Citizen, Partner, Admin |
-| GET / PATCH | `/api/requests/:id` | Role-based |
-| GET | `/api/partners` | Admin |
-| PATCH | `/api/partners/:id` | Admin |
-| GET / POST | `/api/organizations` | Admin |
-| GET / POST | `/api/epr` | Admin |
-| GET | `/api/audit` | Admin |
-| GET | `/api/stats` | Admin |
 
 ---
 
@@ -161,82 +112,8 @@ int252-project/
 ├── vite.config.js
 └── package.json
 ```
-
 ---
 
-## ⚙️ Getting Started
-
-### Prerequisites
-
-- Node.js 18 or higher
-- A free [MongoDB Atlas](https://www.mongodb.com/atlas) account
-
-### 1. Clone and install
-
-```bash
-git clone <your-repository-url>
-cd int252-project
-npm install
-```
-
-### 2. Set up MongoDB Atlas
-
-1. Create a free **M0 cluster**.
-2. In **Database Access**, create a database user.
-3. In **Network Access**, allow your IP address.
-4. In **Connect → Drivers**, copy your connection string and add the database name `ecocycle`.
-
-### 3. Configure environment variables
-
-Create a `.env` file in the project root (use `.env.example` as a template):
-
-```
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecocycle
-PORT=5000
-```
-
-> ⚠️ Never commit your `.env` file.
-
-### 4. Create the admin account
-
-```bash
-node seedAdmin.js
-```
-
-Admin accounts cannot be created through public registration.
-
-### 5. Run the project (two terminals)
-
-```bash
-# Terminal 1 — backend
-npm run server
-
-# Terminal 2 — frontend
-npm run dev
-```
-
-Open **http://localhost:5173** in your browser.
-
----
-
-## 🔒 Security Notes
-
-- Passwords are hashed with bcrypt and never returned by the API
-- Public registration cannot create an admin
-- Every protected route checks the user's real role from the database
-- The MongoDB connection string stays on the server only
-
-### ⚠️ Known Limitation
-
-This project does not use cookies or tokens for login sessions. After login, the browser stores the user id and sends it with each request, and the server verifies the role from the database. Because there is no signed token, someone who knows another user's id could pretend to be that user. This is acceptable for an academic project, but a production system should use signed sessions or JWT.
-
----
-
-## ⚠️ Disclaimer
-
-EPR records in this project are academic records stored in a database. They are not legally certified or government-approved.
-
----
 
 ## 📊 Future Improvements
 
@@ -253,7 +130,7 @@ EPR records in this project are academic records stored in a database. They are 
 
 **Nishant Mangal**
 
-- 📧 mangalnishant1206@gmail.com
+- 📧 mangalnishant60@gmail.com
 - 💻 Full Stack Developer
 - 🎓 B.Tech Computer Science Engineering
 
@@ -262,4 +139,4 @@ EPR records in this project are academic records stored in a database. They are 
 ## 🔗 Project Links
 
 - 🌐 **Live Demo:** _Add your deployed link here_
-- 💻 **GitHub Repository:** _Add your repository link here_
+- 💻 **GitHub Repository:** https://github.com/Nishantmangal01/INT252-ReactJS-Project-ECOCYCLE-
