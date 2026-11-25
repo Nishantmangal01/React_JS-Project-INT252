@@ -138,5 +138,5 @@ int252-project/
 
 ## 🔗 Project Links
 
-- 🌐 **Live Demo:** (https://ecocycle-sage.vercel.app/)
+- 🌐 **Live Demo:** [https://ecocycle-sage.vercel.app/](https://ecocycle-sage.vercel.app/)
 - 💻 **GitHub Repository:** https://github.com/Nishantmangal01/INT252-ReactJS-Project-ECOCYCLE-
