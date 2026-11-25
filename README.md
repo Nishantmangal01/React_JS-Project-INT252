@@ -1,6 +1,6 @@
 # ♻️ EcoCycle — E-Waste Collection & EPR Record Platform
 
-> **Building a cleaner tomorrow, one device at a time** — A full-stack platform that connects citizens, authorized collection partners, recyclers, and participating organizations to collect e-waste responsibly and keep auditable recycling and EPR records.
+> **Building a cleaner tomorrow** — A full-stack platform that connects citizens, authorized collection partners, recyclers, and participating organizations to collect e-waste responsibly and keep auditable recycling and EPR records.
 
 ---
 
