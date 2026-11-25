@@ -3,7 +3,8 @@
 > **Building a cleaner tomorrow** — A full-stack platform that connects citizens, authorized collection partners, recyclers, and participating organizations to collect e-waste responsibly and keep auditable recycling and EPR records.
 
 ---
-
+🌐 **Live Demo:** [https://full-stack-project-sem-4.onrender.com](https://full-stack-project-sem-4.onrender.com)
+---
 ## 🧠 About the Project
 
 **EcoCycle** is a full-stack web application built to make e-waste collection simple, trackable, and accountable.
