@@ -2,7 +2,7 @@
 
 > **Building a cleaner tomorrow** — A full-stack platform that connects citizens, authorized collection partners, recyclers, and participating organizations to collect e-waste responsibly and keep auditable recycling and EPR records.
 ---
-> **🌐 **Live Demo:** [https://full-stack-project-sem-4.onrender.com](https://full-stack-project-sem-4.onrender.com)**
+> **🌐 **Live Demo:** [https://ecocycle-sage.vercel.app/](https://ecocycle-sage.vercel.app/)**
 ---
 ## 🧠 About the Project
 
@@ -138,5 +138,5 @@ int252-project/
 
 ## 🔗 Project Links
 
-- 🌐 **Live Demo:** _Add your deployed link here_
+- 🌐 **Live Demo:** (https://ecocycle-sage.vercel.app/)
 - 💻 **GitHub Repository:** https://github.com/Nishantmangal01/INT252-ReactJS-Project-ECOCYCLE-
