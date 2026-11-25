@@ -41,11 +41,10 @@ The system provides separate views for **Citizens**, **Partners**, and **Admins*
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React JS (Vite), JSX, React Router, Axios, CSS3 |
+| **Frontend** | React JS , JSX, React Router, Axios, CSS |
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB Atlas, Mongoose |
-| **Authentication** | bcryptjs password hashing, server-side role checks |
-| **Other** | cors, dotenv |
+
 
 ---
 
@@ -88,54 +87,6 @@ The system provides separate views for **Citizens**, **Partners**, and **Admins*
 | 🧾 **Audit Log** | Who changed what, and when |
 | 📈 **Admin Overview** | Counts and totals from the database |
 
----
-
-## 📄 Pages
-
-| Route | Who | Description |
-|-------|-----|-------------|
-| `/` | Everyone | Home page |
-| `/register` | Everyone | Create an account |
-| `/login` | Everyone | Log in |
-| `/requests` | Citizen | My requests |
-| `/requests/new` | Citizen | New pickup request |
-| `/requests/:id` | All logged-in roles | Request details (dynamic route) |
-| `/partner` | Partner | Partner dashboard |
-| `/admin` | Admin | Overview (nested routes below) |
-| `/admin/partners` | Admin | Approve or reject partners |
-| `/admin/requests` | Admin | All requests |
-| `/admin/organizations` | Admin | Organizations |
-| `/admin/epr` | Admin | EPR records |
-| `/admin/audit` | Admin | Audit log |
-
----
-
-## 🗄️ Database Models
-
-| Model | Purpose |
-|-------|---------|
-| **User** | Citizens, partners, and the admin |
-| **Request** | Pickup requests with status and verified weight |
-| **Organization** | Participating organizations |
-| **EprRecord** | Links a verified request to an organization |
-| **AuditLog** | Record of every important change |
-
----
-
-## 🔌 API Endpoints
-
-| Method | Endpoint | Access |
-|--------|----------|--------|
-| POST | `/api/auth/register` | Public |
-| POST | `/api/auth/login` | Public |
-| GET / POST | `/api/requests` | Citizen, Partner, Admin |
-| GET / PATCH | `/api/requests/:id` | Role-based |
-| GET | `/api/partners` | Admin |
-| PATCH | `/api/partners/:id` | Admin |
-| GET / POST | `/api/organizations` | Admin |
-| GET / POST | `/api/epr` | Admin |
-| GET | `/api/audit` | Admin |
-| GET | `/api/stats` | Admin |
 
 ---
 
